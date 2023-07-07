@@ -1,9 +1,10 @@
 const http = require('http');
 const fs = require('fs');
+const url = require("url");
 
 
 const server = http.createServer((req, res) => {
-   const filePath = 'index.html';
+   const filePath = 'form.html';
 
 
    if(req.url == "/Home"){
@@ -14,6 +15,7 @@ const server = http.createServer((req, res) => {
           res.end('Internal Server Error');
           return;
         }
+         
         else{
             res.writeHead(200, { 'Content-Type': 'text/html' });
             const modifiedContent = data.replace('hello', 'John Doe');
@@ -22,7 +24,13 @@ const server = http.createServer((req, res) => {
        
       });
    }
+   else if(req.url == "/Submit"){
+    res.end("successfully")
 
+    req.on("data",data=>{
+      console.log(data);
+    })
+  }
 
 });
 

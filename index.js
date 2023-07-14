@@ -1,40 +1,26 @@
-const http = require('http');
-const fs = require('fs');
-const url = require("url");
-
-
-const server = http.createServer((req, res) => {
-   const filePath = 'form.html';
-
-
-   if(req.url == "/Home"){
-    fs.readFile(filePath, 'utf8', (err, data) => {
-        if (err) {
-          console.error(err);
-          res.writeHead(500, { 'Content-Type': 'text/plain' });
-          res.end('Internal Server Error');
-          return;
-        }
-         
-        else{
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            const modifiedContent = data.replace('hello', 'John Doe');
-            res.end(modifiedContent);
-        }
-       
-      });
-   }
-   else if(req.url == "/Submit"){
-    res.end("successfully")
-
-    req.on("data",data=>{
-      console.log(data);
-    })
-  }
-
-});
-
+const express = require('express');
+const app = express();
 const port = 8000;
-server.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
+const filePath = "index.html";
+const fs = require("fs");
+app.get("/", (req, res) => {
+    res.end("Hello Abhishek")
+    fs.readFile(filePath, "utf8", (err,data) => {
+        console.log(data);
+        const modifiedContent = data.replace('Hello',"there")
+    })
+})
+app.get("/home", (req, res) => {
+    res.end("Hello Abhishek")
+})
+app.get("/about", (req, res) => {
+    res.end("Hello Abhishek")
+})
+app.post("/contact", (req, res) => {
+    res.end("hello");
+})
+
+
+app.listen(port, () => {
+    console.log("servercreate");
 });
